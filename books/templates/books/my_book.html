@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    My book
+{% endblock title %}
+
+
+
+{% block content %}
+<div >
+    <button type="button" class="btn btn-warning float-end rounded-pill " data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add book</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add book</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Tittle:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Isbn:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<h1 class="mb-3">My book</h1>
+{% for book in page_obj %}
+<a class="link-light text-decoration-none" href="{% url 'books:detail' book.id %}">
+   <div class="row mb-3 py-3 " style="background-color: #17a2b8; color: white; font-family: cursive; ">
+        <div class="col-1 ms-0">
+            <img class="img-thumbnail " src="{{ book.cover_picture.url }}" alt="">
+        </div>
+        <div class="col-7">
+            <h4>{{ book.title }}</h4>
+
+            {% if review.user == request.user %}
+                <a href="{% url 'books:edit-review' book.id review.id %}" ><i class="bi bi-pen"></i></a>
+                <a href="{% url 'books:confirm-delete-review' book.id review.id %}"><i class="bi bi-trash3"></i></a>
+            {% endif %}
+
+            <p class="mt-2 fs-6">{{ book.description | truncatechars:200  }}</p>
+        </div>
+    </div>
+</a>
+<!--example comment-->
+{% if book.bookreview_set.exists %}
+
+    <hr><h3>Rewiews</h3>
+
+    {% for review in book.bookreview_set.all %}
+
+        <div class="row mb-2 p-2  " style="border-radius: 20px; background-color:rgba(180, 180, 180, 0.50); width: 60%;">
+            <div class="col-1 mb-1">
+                <img class="small-profile-pic " style="width:50px; height:50px;" src="{{ review.user.profile_picture.url }}" alt="">
+            </div>
+            <div class="col-11">
+                <b>{{ review.user.username }}</b>
+
+                {% if review.stars_given == 1 %} <i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i> {% endif %}
+                {% if review.stars_given == 2 %} <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i> {% endif %}
+                {% if review.stars_given == 3 %} <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i> {% endif %}
+                {% if review.stars_given == 4 %} <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i> {% endif %}
+                {% if review.stars_given == 5 %} <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i> {% endif %}
+
+                <span class="fw-lighter">{{ review.created_at }}</span>
+
+                {% if review.user == request.user %}
+                    <a href="{% url 'books:edit-review' book.id review.id %}" ><i class="bi bi-pen"></i></a>
+                    <a href="{% url 'books:confirm-delete-review' book.id review.id %}"><i class="bi bi-trash3"></i></a>
+                {% endif %}
+
+                <p class="mt-1 mb-0 font-monospace ">{{ review.comment | truncatechars:70  }}</p>
+
+            </div>
+        </div>
+
+
+    {% endfor %}
+   <hr>
+{% endif %}
+<!--endexample comment-->
+{% endfor %}
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+             <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+             <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        <li class="page-item active">
+            <a class="page-link" href="#">{{page_obj.number}}</a>
+        </li>
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator_num_pages }}">last&raquo;</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
+{% endblock content %}
+
+
+

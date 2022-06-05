@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Users
+{% endblock title %}
+
+
+
+{% block content %}
+
+<!-- Team Start -->
+<div class="container-fluid pt-5" style="font-family: cursive; ">
+    <div class="container">
+        <div class="text-center pb-2">
+            <p class="section-title px-5"><span class="px-2 text-uppercase" >Our Users</span></p>
+            <h1 class="mb-4" style=" color:#17a2b8;">Meet Our Users</h1>
+        </div>
+        <div class="row">
+            {% for user in users %}
+            <div class="col-md-6 col-lg-3 text-center team mb-5 ">
+                <a class="text-decoration-none" style="color:#00394f;" href="{%url 'users:userprofile' user.id %}">
+                    <div class="position-relative overflow-hidden mb-4 " style="border-radius: 100%;">
+                        <img class=" w-100 " src="{{ user.profile_picture.url }}" style="height:250px;" alt="" >
+                    </div>
+                    <h4>{{ user.username }}</h4>
+                    <div class="d-flex justify-content-center mt-4 center" >
+                    <a class="btn btn-outline rounded-circle text-center mr-2 px-0 "
+                        style="width: 38px; height: 38px; color: #17a2b8;border:1px solid #17a2b8;" href="https://t.me/xurshid_olimov" ><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline rounded-circle text-center mr-2 px-0"
+                        style="width: 38px; height: 38px; color: #17a2b8;border:1px solid #17a2b8;" href="https://www.facebook.com/profile.php?id=100075027764961"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline rounded-circle text-center mr-2 px-0"
+                        style="width: 38px; height: 38px; color: #17a2b8;border:1px solid #17a2b8;" href="https://www.linkedin.com/in/khurshid-olimov/"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline rounded-circle text-center mr-2 px-0"
+                        style="width: 38px; height: 38px; color: #17a2b8; border:1px solid #17a2b8;" href="https://www.instagram.com/xurshidolimov17/"><i class="fab fa-instagram"></i></a>
+                </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Team End -->
+
+{% endblock content %}

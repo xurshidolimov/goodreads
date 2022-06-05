@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+
+{% block title %} Books Page {% endblock  %}
+
+{% block content %}
+<div >
+    <button type="button" class="btn btn-warning float-end rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Add book</button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add book</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Tittle:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Isbn:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<h1>Books</h1>
+
+<!--search-->
+<div class="row mb-3">
+    <div class="col-4">
+        <form class="d-flex" method="get">
+            <input class="form-control me-2" type="text", placeholder="Search" name="q", value="{{ search_query }}">
+            <button class="btn btn-success">Search</button>
+        </form>
+    </div>
+</div>
+<!--endsearch-->
+{% if page_obj %}
+    {% for  book in page_obj.object_list %}
+        <div class="row mb-4">
+            <div class="col-2 ">
+                <img class="cover-pic" src="{{ book.cover_picture.url }}" alt="">
+            </div>
+            <div class="col-6 ms-4">
+                <h3><a href="{% url 'books:detail' book.id %}">{{ book.title }}</a></h3>
+                <p>{{ book.description }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+<!--navbar-->
+<nav>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+             <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+             <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">previous</a></li>
+        {% endif %}
+
+        <li class="page-item active">
+            <a class="page-link" href="#">{{page_obj.number}}</a>
+        </li>
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator_num_pages }}">last&raquo;</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
+<!--            {% if page_obj.has_previous %}-->
+<!--                <a href="{% url 'books:list' %}?page={{ page_obj.previous_page_number }}">Previous</a>-->
+<!--            {% endif %}-->
+<!--            {{  page_obj.number }}-->
+<!--            {% if page_obj.has_next %}-->
+<!--                <a href="{% url 'books:list' %}?page={{ page_obj.next_page_number }}">Next</a>-->
+<!--            {% endif %}-->
+<!--endnavbar-->
+
+{% else %}
+    No books found.
+{% endif %}
+
+{% endblock content %}
+
+
+
+
+

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %} Profile page {% endblock  %}
+
+{% block content %}
+
+<!--example-->
+<div class="card mb-3" style="max-width: 540px; background-color:#00394f; color:white;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ user.profile_picture.url }}" class="img-fluid rounded-start" style="height:100%;" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <div class="d-flex">
+            <h4 class="bi bi-person-fill me-2" style="color: #17a2b8;"></h4>
+            <div class="pl-3">
+                <h6 class="text-white">Username</h6>
+                <p class="fs-6 ms-1">{{ user.username }}</p>
+            </div>
+        </div>
+        <div class="d-flex">
+            <h4 class="fa fa-envelope me-2" style="color: #17a2b8;"></h4>
+            <div class="pl-3">
+                <h6 class="text-white">Email</h6>
+                <p class="fs-6 ms-1">{{ user.email }}</p>
+            </div>
+        </div>
+        <div class="d-flex">
+            <h4 class="bi bi-apple me-2" style="color: #17a2b8;"></h4>
+            <div class="pl-3">
+                <h6 class="text-white">Created</h6>
+                <p class="fs-6 ms-1">{{ user.date_joined|date:"M d, Y" }}</p>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center mb-4 center" >
+                    <a class="btn btn-outline rounded-circle text-center mr-2 px-0 "
+                        style="width: 38px; height: 38px; color: #17a2b8;border:1px solid #17a2b8;" href="https://t.me/xurshid_olimov" ><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline rounded-circle text-center mr-2 px-0"
+                        style="width: 38px; height: 38px; color: #17a2b8;border:1px solid #17a2b8;" href="https://www.facebook.com/profile.php?id=100075027764961"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline rounded-circle text-center mr-2 px-0"
+                        style="width: 38px; height: 38px; color: #17a2b8;border:1px solid #17a2b8;" href="https://www.linkedin.com/in/khurshid-olimov/"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline rounded-circle text-center mr-2 px-0"
+                        style="width: 38px; height: 38px; color: #17a2b8; border:1px solid #17a2b8;" href="https://www.instagram.com/xurshidolimov17/"><i class="fab fa-instagram"></i></a>
+                </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--endexample-->
+{% endblock content %}
